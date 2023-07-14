@@ -27,12 +27,12 @@ export const ButtonCustom = (props: Props) => {
 const styles = StyleSheet.create({
     container: {
         borderRadius: 30,
-        width: screen.width - 32
+        width: screen.width - 32,
     },
     title: {
         textAlign: "center",
-        fontWeight: "700",
+        fontWeight: "600",
         marginVertical: 16,
-        fontSize: 18
+        fontSize: 16
     }
 });

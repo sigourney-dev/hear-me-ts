@@ -52,7 +52,7 @@ export const TypesSignIn = () => {
 
   return (
     <View style={styles.container}>
-      <AppBarCustom iconLeft={faArrowLeft} />
+      <AppBarCustom iconLeft={faArrowLeft} onPress={() => {}}/>
       <View style={styles.wrapper}>
         <Image
           source={images.let_yoy_in}
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
   },
   textDivide: {
     color: colors.white,
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: "600"
   },
   divide: {
     borderBottomColor: colors.white,
