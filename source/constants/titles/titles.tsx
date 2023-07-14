@@ -10,6 +10,7 @@ export const titles = {
     continue_with_Gg: 'Continue with Google',
     continue_with_Ap: 'Continue with Apple',
     sign_in_pass: 'Sign in with password',
+    sign_in: 'Sign in',
     not_have_account: 'Don\'t have an account?',
     sign_up: 'Sign up',
     create_account: 'Create Your Account',

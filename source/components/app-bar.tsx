@@ -8,7 +8,7 @@ type Props = {
     iconLeft: any,
     iconRight?: any,
     title?: String,
-    onPress?: Function,
+    onPress: Function,
 }
 
 export const AppBarCustom = (props: Props) => {
@@ -19,7 +19,7 @@ export const AppBarCustom = (props: Props) => {
         <View style={styles.container}>
             <View style={styles.left}>
                 <TouchableOpacity onPress={() => {navigation.goBack()}}>
-                <FontAwesomeIcon icon={iconLeft} style={styles.iconLeft} size={24}/>
+                <FontAwesomeIcon icon={iconLeft} style={styles.iconLeft} size={20}/>
                 </TouchableOpacity>
                 {
                     title ? <Text style={styles.title}>{title}</Text> : null
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
         marginLeft: 12,
         fontWeight: "700",
         fontSize: 20,
+        marginTop: 2
     },
     iconLeft: {
         color: colors.white,

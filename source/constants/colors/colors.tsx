@@ -9,4 +9,5 @@ export const colors = {
     backgroundBorder: "#1F222A",
     border: "#33363D",
     fb: "#2167EE",
+    grayIcon: "#9E9E9E",
 }

@@ -8,10 +8,7 @@ import {
 export const HomeScreen = ({navigation}) => {
     return (
         <View>
-            <Text>Home Screen</Text>
-            <Button title='Go to Splash' onPress={() => {
-                navigation.navigate('SplashScreen')
-            }}/>
+            <Text>Home</Text>
         </View>
     );
 }

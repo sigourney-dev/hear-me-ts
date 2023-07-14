@@ -5,3 +5,5 @@ export * from './library/library';
 export * from './splash/splash';
 export * from './types-sign-in/types-sign-in';
 export * from './register/register';
+export * from './login/login';
+export * from './fill-profile/fill-profile';
