@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {colors} from '../constants/colors/colors';
+import CountryPicker from 'react-native-country-picker-modal';
+import { CountryCode, Country } from 'react-native-country-picker-modal';
 
 type Props = {
   iconLeft?: any;
@@ -16,6 +18,8 @@ type Props = {
   numberOfLine?: number;
   onPressRight: Function;
   secureTextEntry?: boolean;
+  countryPicker?: boolean;
+  value?: string;
 };
 
 const screen = Dimensions.get('window');
@@ -27,11 +31,18 @@ export const TextInputCustom = (props: Props) => {
     hiddenText,
     numberOfLine,
     onPressRight,
-    secureTextEntry
+    secureTextEntry,
+    countryPicker,
+    value
   } = props;
-  const [colorTextFocus, setColorTextFocus] = useState(colors.grayIcon);
-  const [colorBorder, setColorBorder] = useState('');
-  const [colorIcon, setColorIcon] = useState(colors.grayIcon);
+  const [colorTextFocus, setColorTextFocus] = useState<string>(colors.grayIcon);
+  const [colorBorder, setColorBorder] = useState<string>('');
+  const [colorIcon, setColorIcon] = useState<string>(colors.grayIcon);
+  const [country, setCountry] = useState<CountryCode>('VN');
+
+  const onSelect = (country: Country) => {
+    setCountry(country.cca2);
+  }
 
   return (
     <View
@@ -45,11 +56,25 @@ export const TextInputCustom = (props: Props) => {
             icon={iconLeft}
             size={16}
             style={styles.iconLeft}
-            color={colorTextFocus == colors.grayIcon ? colorIcon : colorTextFocus}
+            color={
+              colorTextFocus == colors.grayIcon ? colorIcon : colorTextFocus
+            }
           />
+        ) : null}
+        {countryPicker ? (
+          <View style={styles.country}>
+            <CountryPicker 
+            withCallingCode={true}
+            withAlphaFilter={true}
+            withFilter={true}
+            countryCode={country}
+            onSelect={(country) => onSelect(country)}
+          />
+          </View>
         ) : null}
         <TextInput
           placeholder={hiddenText}
+          defaultValue={value ? value : ''}
           style={styles.textInput}
           numberOfLines={numberOfLine}
           placeholderTextColor={colors.grayIcon}
@@ -63,11 +88,11 @@ export const TextInputCustom = (props: Props) => {
             setColorBorder('');
           }}
           secureTextEntry={secureTextEntry}
-          onChangeText={(text) => {
-            if(text.length > 0) {
-                setColorIcon(colors.white);
+          onChangeText={text => {
+            if (text.length > 0) {
+              setColorIcon(colors.white);
             } else {
-                setColorIcon(colors.grayIcon);
+              setColorIcon(colors.grayIcon);
             }
           }}
         />
@@ -81,7 +106,9 @@ export const TextInputCustom = (props: Props) => {
             icon={iconRight}
             size={16}
             style={styles.iconRight}
-            color={colorTextFocus == colors.grayIcon ? colorIcon : colorTextFocus}
+            color={
+              colorTextFocus == colors.grayIcon ? colorIcon : colorTextFocus
+            }
           />
         ) : null}
       </TouchableOpacity>
@@ -104,8 +131,7 @@ const styles = StyleSheet.create({
   left: {
     flexDirection: 'row',
   },
-  iconRight: {
-  },
+  iconRight: {},
   iconLeft: {
     marginRight: 12,
   },
@@ -114,4 +140,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: '600',
   },
+  country: {
+    marginTop: -8
+  }
 });

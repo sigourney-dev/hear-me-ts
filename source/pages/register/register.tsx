@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
+    width: screen.width - 32
   },
   borderDivide: {
     flexDirection: 'row',
