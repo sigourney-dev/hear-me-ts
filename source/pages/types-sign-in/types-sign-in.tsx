@@ -81,7 +81,9 @@ export const TypesSignIn = () => {
             <View style={styles.divide}></View>
         </View>
 
+        <View style={styles.button}>
         <ButtonCustom title={titles.sign_in_pass} backgroundColor={colors.main} titleColor={colors.white} onPress={() => {}} />
+        </View>
 
         <View style={styles.textBottom}>
             <Text style={styles.textDescription}>{titles.not_have_account}</Text>
@@ -159,5 +161,8 @@ const styles = StyleSheet.create({
   },
   textSign: {
     color: colors.main
+  },
+  button: {
+    width: screen.width - 32
   }
 });

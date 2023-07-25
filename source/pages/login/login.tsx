@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   button: {
-    marginTop: 24
+    marginTop: 24,
+    width: screen.width - 32
   },
   borderDivide: {
     flexDirection: "row",
