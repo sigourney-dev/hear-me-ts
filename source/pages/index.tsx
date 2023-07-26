@@ -7,3 +7,5 @@ export * from './types-sign-in/types-sign-in';
 export * from './register/register';
 export * from './login/login';
 export * from './fill-profile/fill-profile';
+export * from './create-new-pin/create-new-pin';
+export * from './set-fingerprint/set-fingerprint';

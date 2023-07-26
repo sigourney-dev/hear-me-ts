@@ -1,5 +1,5 @@
 import React from 'react';
-import {DarkTheme, NavigationContainer} from '@react-navigation/native';
+import {DarkTheme, NavigationContainer, Theme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -11,10 +11,11 @@ import {
   TypesSignIn,
   RegisterScreen,
   LoginScreen,
-  FillProfile
+  FillProfile,
+  CreateNewPin,
+  SetFingerprint
 } from '../pages/index';
 import {colors} from '../constants/colors/colors';
-import {Theme} from 'react-native-elements';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBook, faHome, faUser} from '@fortawesome/free-solid-svg-icons';
@@ -92,7 +93,7 @@ const AppRouter = () => {
     colors: {
       background: colors.background,
     },
-  };
+  } as Theme;
 
   return (
     <SafeAreaProvider>
@@ -112,6 +113,8 @@ const AppRouter = () => {
           <Stack.Screen name="LibraryScreen" component={LibraryScreen} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="FillProfile" component={FillProfile} />
+          <Stack.Screen name="CreateNewPin" component={CreateNewPin} />
+          <Stack.Screen name="SetFingerprint" component={SetFingerprint} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
