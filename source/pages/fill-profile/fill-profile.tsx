@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Keyboard,
+  ScrollView,
+  TouchableWithoutFeedback
+} from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faSquarePen} from '@fortawesome/free-solid-svg-icons';
 import {titles} from '../../constants/titles/titles';
 import {TextInputCustom} from '../../components/text-input';
 import {
@@ -10,13 +19,38 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import {ButtonCustom} from '../../components/button';
 import {colors} from '../../constants/colors/colors';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import moment from 'moment';
-import { formatDate } from '../../utils/helper';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {formatDate} from '../../utils/helper';
+import {MediaType, launchImageLibrary} from 'react-native-image-picker';
+import {images} from '../../constants/images/images';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 export const FillProfile = () => {
   const [visibleCalendar, setVisibleCalendar] = useState(false);
-  const [day, setDay] = useState(formatDate(new Date));
+  const [day, setDay] = useState(formatDate(new Date()));
+  const [imgSelected, setImgSelected] = useState();
+
+  ///convert base64 to image
+  const formatImage = (base64: any) => {
+    return `data:image/jpg;base64,${base64}`;
+  };
+
+  const handleChooseImg = useCallback(() => {
+    let options = {
+      selectionLimit: 1,
+      mediaType: 'photo' as MediaType,
+      includeBase64: false,
+    };
+
+    launchImageLibrary(options, res => {
+      if (res.assets) {
+        // const img = formatImage(res.assets[0].base64);
+        const img = Image.resolveAssetSource(res.assets[0]).uri;
+        setImgSelected(img);
+      }
+    });
+  }, []);
+
   const handleCalendar = () => {
     setVisibleCalendar(!visibleCalendar);
   };
@@ -31,29 +65,56 @@ export const FillProfile = () => {
         />
       </View>
       <View style={styles.wrapper}>
-        <TextInputCustom
-          hiddenText={titles.full_name}
-          onPressRight={() => {}}
-        />
-        <TextInputCustom hiddenText={titles.nickname} onPressRight={() => {}} />
-        <TextInputCustom
-          hiddenText={titles.dob}
-          iconRight={faCalendarDays}
-          onPressRight={() => {
-            handleCalendar();
-          }}
-          value={day}
-        />
-        <TextInputCustom
-          hiddenText={titles.email}
-          iconRight={faPaperPlane}
-          onPressRight={() => {}}
-        />
-        <TextInputCustom
-          countryPicker={true}
-          hiddenText={titles.phone_number}
-          onPressRight={() => {}}
-        />
+            <View style={styles.avatar}>
+            <Image
+              source={imgSelected ? {uri: imgSelected} : images.avatar_default}
+              resizeMode="cover"
+              style={styles.image}
+            />
+            <TouchableOpacity
+              style={styles.iconWrapper}
+              onPress={() => {
+                handleChooseImg();
+              }}>
+              <FontAwesomeIcon
+                icon={faSquarePen}
+                size={28}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
+          <TextInputCustom
+            hiddenText={titles.full_name}
+            onPressRight={() => {}}
+            onChangeText={() => {}}
+          />
+          <TextInputCustom
+            hiddenText={titles.nickname}
+            onPressRight={() => {}}
+            onChangeText={() => {}}
+          />
+          <TextInputCustom
+            hiddenText={titles.dob}
+            iconRight={faCalendarDays}
+            onPressRight={() => {
+              handleCalendar();
+            }}
+            value={day}
+            onChangeText={() => {}}
+          />
+          <TextInputCustom
+            hiddenText={titles.email}
+            iconRight={faPaperPlane}
+            onPressRight={() => {}}
+            onChangeText={() => {}}
+          />
+          <TextInputCustom
+            countryPicker={true}
+            hiddenText={titles.phone_number}
+            onPressRight={() => {}}
+            onChangeText={() => {
+            }}
+          />
       </View>
       <View style={styles.bottom}>
         <View style={styles.button}>
@@ -75,14 +136,14 @@ export const FillProfile = () => {
         </View>
       </View>
 
-      <DateTimePickerModal 
-      isVisible={visibleCalendar}
-      mode="date"
-      onConfirm={(date) => {
-        setDay(formatDate(date));
-        handleCalendar();
-      }}
-      onCancel={() => handleCalendar()}
+      <DateTimePickerModal
+        isVisible={visibleCalendar}
+        mode="date"
+        onConfirm={date => {
+          setDay(formatDate(date));
+          handleCalendar();
+        }}
+        onCancel={() => handleCalendar()}
       />
     </View>
   );
@@ -93,12 +154,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   head: {
-    flex: 0.2,
+    flex: 0.15,
   },
   wrapper: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  avatar: {
+    position: 'relative',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+  },
+  iconWrapper: {
+    position: 'absolute',
+    top: 75,
+    left: 75,
+  },
+  icon: {
+    color: colors.main,
   },
   bottom: {
     flexDirection: 'row',

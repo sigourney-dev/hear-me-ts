@@ -20,6 +20,7 @@ type Props = {
   secureTextEntry?: boolean;
   countryPicker?: boolean;
   value?: string;
+  onChangeText: Function;
 };
 
 const screen = Dimensions.get('window');
@@ -33,7 +34,8 @@ export const TextInputCustom = (props: Props) => {
     onPressRight,
     secureTextEntry,
     countryPicker,
-    value
+    value,
+    onChangeText
   } = props;
   const [colorTextFocus, setColorTextFocus] = useState<string>(colors.grayIcon);
   const [colorBorder, setColorBorder] = useState<string>('');
@@ -93,7 +95,8 @@ export const TextInputCustom = (props: Props) => {
               setColorIcon(colors.white);
             } else {
               setColorIcon(colors.grayIcon);
-            }
+            };
+            onChangeText();
           }}
         />
       </View>
