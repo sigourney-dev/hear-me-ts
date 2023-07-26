@@ -14,14 +14,14 @@ import {
   faEyeSlash,
   faEye,
   faLock,
-  faPaperPlane,
+  faEnvelope,
   faSquareCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-    faFacebook,
-    faGoogle,
-    faApple,
-  } from '@fortawesome/free-brands-svg-icons';
+  faFacebook,
+  faGoogle,
+  faApple,
+} from '@fortawesome/free-brands-svg-icons';
 import {faSquare} from '@fortawesome/free-regular-svg-icons';
 import {images} from '../../constants/images/images';
 import {titles} from '../../constants/titles/titles';
@@ -29,28 +29,32 @@ import {colors} from '../../constants/colors/colors';
 import {TextInputCustom} from '../../components/text-input';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {TouchableOpacity} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const screen = Dimensions.get('window');
 
 type Props = {
-    icon: any;
-    onPress: Function;
-    color: any
-}
+  icon: any;
+  onPress: Function;
+  color: any;
+};
 
 const LogoBox = (props: Props) => {
-    const {icon, onPress, color} = props;
+  const {icon, onPress, color} = props;
 
-    return (
-        <TouchableOpacity style={styles.logoBox} onPress={() => {onPress()}}>
-            <FontAwesomeIcon icon={icon} size={24} color={color}/>
-        </TouchableOpacity>
-    );
-}
+  return (
+    <TouchableOpacity
+      style={styles.logoBox}
+      onPress={() => {
+        onPress();
+      }}>
+      <FontAwesomeIcon icon={icon} size={24} color={color} />
+    </TouchableOpacity>
+  );
+};
 
 export const LoginScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [hiddenPass, setHiddenPass] = useState(true);
   const [isSelected, setIsSelected] = useState(false);
 
@@ -67,8 +71,9 @@ export const LoginScreen = () => {
         <View>
           <TextInputCustom
             hiddenText={titles.email}
-            iconLeft={faPaperPlane}
+            iconLeft={faEnvelope}
             onPressRight={() => {}}
+            onChangeText={() => {}}
           />
           <TextInputCustom
             hiddenText={titles.password}
@@ -78,6 +83,7 @@ export const LoginScreen = () => {
               setHiddenPass(!hiddenPass);
             }}
             secureTextEntry={hiddenPass}
+            onChangeText={() => {}}
           />
         </View>
         <TouchableOpacity
@@ -94,34 +100,36 @@ export const LoginScreen = () => {
           <Text style={styles.textRemember}>{titles.remember_me}</Text>
         </TouchableOpacity>
 
-       <View style={styles.button}>
-       <ButtonCustom
-          title={titles.sign_in}
-          backgroundColor={colors.main}
-          titleColor={colors.white}
-          onPress={() => {navigation.navigate('BottomBar')}}
-        />
-       </View>
-       <TouchableOpacity onPress={() => {}} style={styles.forgot}>
-                <Text style={styles.textSign}> {titles.forgot_pass_question}</Text>
-            </TouchableOpacity>
-       <View style={styles.borderDivide}>
-            <View style={styles.divide} />
-            <Text style={styles.textDivide}>{titles.or_continue_with}</Text>
-            <View style={styles.divide}></View>
+        <View style={styles.button}>
+          <ButtonCustom
+            title={titles.sign_in}
+            backgroundColor={colors.main}
+            titleColor={colors.white}
+            onPress={() => {
+              navigation.navigate('BottomBar');
+            }}
+          />
+        </View>
+        <TouchableOpacity onPress={() => {}} style={styles.forgot}>
+          <Text style={styles.textSign}> {titles.forgot_pass_question}</Text>
+        </TouchableOpacity>
+        <View style={styles.borderDivide}>
+          <View style={styles.divide} />
+          <Text style={styles.textDivide}>{titles.or_continue_with}</Text>
+          <View style={styles.divide}></View>
         </View>
 
         <View style={styles.wrapperLogo}>
-            <LogoBox icon={faFacebook} onPress={() => {}} color={colors.fb} />
-            <LogoBox icon={faGoogle} onPress={() => {}} color={colors.red} />
-            <LogoBox icon={faApple} onPress={() => {}} color={colors.gray} />
+          <LogoBox icon={faFacebook} onPress={() => {}} color={colors.fb} />
+          <LogoBox icon={faGoogle} onPress={() => {}} color={colors.red} />
+          <LogoBox icon={faApple} onPress={() => {}} color={colors.gray} />
         </View>
 
         <View style={styles.textBottom}>
-            <Text style={styles.textDescription}>{titles.not_have_account}</Text>
-            <TouchableOpacity onPress={() => {}}>
-                <Text style={styles.textSign}> {titles.sign_up}</Text>
-            </TouchableOpacity>
+          <Text style={styles.textDescription}>{titles.not_have_account}</Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.textSign}> {titles.sign_up}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -160,23 +168,23 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
-    width: screen.width - 32
+    width: screen.width - 32,
   },
   borderDivide: {
-    flexDirection: "row",
-    marginVertical: 32
+    flexDirection: 'row',
+    marginVertical: 32,
   },
   divide: {
     borderBottomColor: colors.white,
     borderBottomWidth: StyleSheet.hairlineWidth,
     flex: 0.5,
     marginHorizontal: 16,
-    marginBottom: 10
+    marginBottom: 10,
   },
   textDivide: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   logoBox: {
     borderWidth: 0.4,
@@ -184,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundBorder,
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12
+    borderRadius: 12,
   },
   wrapperLogo: {
     flexDirection: 'row',
@@ -193,15 +201,15 @@ const styles = StyleSheet.create({
   },
   textBottom: {
     flexDirection: 'row',
-    marginTop: 12
+    marginTop: 12,
   },
   textDescription: {
     color: colors.white,
   },
   textSign: {
-    color: colors.main
+    color: colors.main,
   },
   forgot: {
-    marginTop: 12
-  }
+    marginTop: 12,
+  },
 });

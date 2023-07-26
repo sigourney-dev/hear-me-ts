@@ -1,13 +1,9 @@
-import React, {useCallback, useState} from 'react';
+import React, {SetStateAction, useCallback, useState} from 'react';
 import {
   View,
   StyleSheet,
   Image,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Keyboard,
-  ScrollView,
-  TouchableWithoutFeedback
 } from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
 import {faArrowLeft, faSquarePen} from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +11,7 @@ import {titles} from '../../constants/titles/titles';
 import {TextInputCustom} from '../../components/text-input';
 import {
   faCalendarDays,
-  faPaperPlane,
+  faEnvelope,
 } from '@fortawesome/free-regular-svg-icons';
 import {ButtonCustom} from '../../components/button';
 import {colors} from '../../constants/colors/colors';
@@ -24,8 +20,12 @@ import {formatDate} from '../../utils/helper';
 import {MediaType, launchImageLibrary} from 'react-native-image-picker';
 import {images} from '../../constants/images/images';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import KeyboardAvoidingWrapper from '../../components/keyboard-avoiding';
+import { useNavigation } from '@react-navigation/native';
+import { ScreenName } from '../../router/screen-name';
 
 export const FillProfile = () => {
+  const navigation = useNavigation();
   const [visibleCalendar, setVisibleCalendar] = useState(false);
   const [day, setDay] = useState(formatDate(new Date()));
   const [imgSelected, setImgSelected] = useState();
@@ -64,7 +64,8 @@ export const FillProfile = () => {
           title={titles.fill_profile}
         />
       </View>
-      <View style={styles.wrapper}>
+     <KeyboardAvoidingWrapper>
+     <View style={styles.wrapper}>
             <View style={styles.avatar}>
             <Image
               source={imgSelected ? {uri: imgSelected} : images.avatar_default}
@@ -104,7 +105,7 @@ export const FillProfile = () => {
           />
           <TextInputCustom
             hiddenText={titles.email}
-            iconRight={faPaperPlane}
+            iconRight={faEnvelope}
             onPressRight={() => {}}
             onChangeText={() => {}}
           />
@@ -116,6 +117,7 @@ export const FillProfile = () => {
             }}
           />
       </View>
+     </KeyboardAvoidingWrapper>
       <View style={styles.bottom}>
         <View style={styles.button}>
           <ButtonCustom
@@ -131,7 +133,9 @@ export const FillProfile = () => {
             title={titles.continue}
             backgroundColor={colors.main}
             titleColor={colors.white}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate(ScreenName.CreateNewPin);
+            }}
           />
         </View>
       </View>
@@ -181,9 +185,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 16,
-    flex: 0.13,
+    flex: 0.2,
   },
   button: {
+    marginTop: 42,
     flex: 0.49,
   },
 });

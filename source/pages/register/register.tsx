@@ -14,7 +14,7 @@ import {
   faEyeSlash,
   faEye,
   faLock,
-  faPaperPlane,
+  faEnvelope,
   faSquareCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -71,18 +71,16 @@ export const RegisterScreen = () => {
         <View>
           <TextInputCustom
             hiddenText={titles.email}
-            iconLeft={faPaperPlane}
-            onPressRight={() => {}}
-          />
+            iconLeft={faEnvelope}
+            onPressRight={() => { } } onChangeText={() => {}}          />
           <TextInputCustom
             hiddenText={titles.password}
             iconLeft={faLock}
             iconRight={hiddenPass ? faEyeSlash : faEye}
             onPressRight={() => {
               setHiddenPass(!hiddenPass);
-            }}
-            secureTextEntry={hiddenPass}
-          />
+            } }
+            secureTextEntry={hiddenPass} onChangeText={() => {}}          />
         </View>
         <TouchableOpacity
           style={styles.remember}
