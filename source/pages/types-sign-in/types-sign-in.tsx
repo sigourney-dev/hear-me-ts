@@ -18,8 +18,9 @@ import {
 import {images} from '../../constants/images/images';
 import {titles} from '../../constants/titles/titles';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import { ButtonCustom } from '../../components/button';
-import { useNavigation } from '@react-navigation/native';
+import {ButtonCustom} from '../../components/button';
+import {useNavigation} from '@react-navigation/native';
+import {ScreenName} from '../../router/screen-name';
 
 const screen = Dimensions.get('window');
 
@@ -48,11 +49,11 @@ const Options = (props: Props) => {
 };
 
 export const TypesSignIn = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <AppBarCustom iconLeft={faArrowLeft} onPress={() => {}}/>
+      <AppBarCustom iconLeft={faArrowLeft} onPress={() => {}} />
       <View style={styles.wrapper}>
         <Image
           source={images.let_yoy_in}
@@ -76,20 +77,30 @@ export const TypesSignIn = () => {
           color={colors.gray}
         />
         <View style={styles.borderDivide}>
-            <View style={styles.divide} />
-            <Text style={styles.textDivide}>{titles.or}</Text>
-            <View style={styles.divide}></View>
+          <View style={styles.divide} />
+          <Text style={styles.textDivide}>{titles.or}</Text>
+          <View style={styles.divide}></View>
         </View>
 
         <View style={styles.button}>
-        <ButtonCustom title={titles.sign_in_pass} backgroundColor={colors.main} titleColor={colors.white} onPress={() => {}} />
+          <ButtonCustom
+            title={titles.sign_in_pass}
+            backgroundColor={colors.main}
+            titleColor={colors.white}
+            onPress={() => {
+              navigation.navigate(ScreenName.LoginScreen);
+            }}
+          />
         </View>
 
         <View style={styles.textBottom}>
-            <Text style={styles.textDescription}>{titles.not_have_account}</Text>
-            <TouchableOpacity onPress={() => {navigation.navigate('RegisterScreen')}}>
-                <Text style={styles.textSign}> {titles.sign_up}</Text>
-            </TouchableOpacity>
+          <Text style={styles.textDescription}>{titles.not_have_account}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(ScreenName.RegisterScreen);
+            }}>
+            <Text style={styles.textSign}> {titles.sign_up}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -130,39 +141,39 @@ const styles = StyleSheet.create({
   textOptions: {
     color: colors.white,
     fontSize: 15,
-    fontWeight: "600",
-    marginTop: 3
+    fontWeight: '600',
+    marginTop: 3,
   },
   iconOptions: {
     marginRight: 12,
   },
   borderDivide: {
-    flexDirection: "row",
-    marginVertical: 32
+    flexDirection: 'row',
+    marginVertical: 32,
   },
   textDivide: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: '600',
   },
   divide: {
     borderBottomColor: colors.white,
     borderBottomWidth: StyleSheet.hairlineWidth,
     flex: 0.5,
     marginHorizontal: 16,
-    marginBottom: 10
+    marginBottom: 10,
   },
   textBottom: {
     flexDirection: 'row',
-    marginTop: 24
+    marginTop: 24,
   },
   textDescription: {
     color: colors.white,
   },
   textSign: {
-    color: colors.main
+    color: colors.main,
   },
   button: {
-    width: screen.width - 32
-  }
+    width: screen.width - 32,
+  },
 });

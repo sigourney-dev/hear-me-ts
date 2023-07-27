@@ -9,3 +9,4 @@ export * from './login/login';
 export * from './fill-profile/fill-profile';
 export * from './create-new-pin/create-new-pin';
 export * from './set-fingerprint/set-fingerprint';
+export * from './follow-artists/follow-artists';

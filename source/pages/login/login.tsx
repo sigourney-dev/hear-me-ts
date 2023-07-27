@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import {ButtonCustom} from '../../components/button';
 import {AppBarCustom} from '../../components/app-bar';
 import {
@@ -30,6 +23,7 @@ import {TextInputCustom} from '../../components/text-input';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {ScreenName} from '../../router/screen-name';
 
 const screen = Dimensions.get('window');
 
@@ -106,7 +100,7 @@ export const LoginScreen = () => {
             backgroundColor={colors.main}
             titleColor={colors.white}
             onPress={() => {
-              navigation.navigate('BottomBar');
+              navigation.navigate(ScreenName.BottomBar);
             }}
           />
         </View>
@@ -127,7 +121,9 @@ export const LoginScreen = () => {
 
         <View style={styles.textBottom}>
           <Text style={styles.textDescription}>{titles.not_have_account}</Text>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate(ScreenName.RegisterScreen)
+          }}>
             <Text style={styles.textSign}> {titles.sign_up}</Text>
           </TouchableOpacity>
         </View>

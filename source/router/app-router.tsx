@@ -13,7 +13,8 @@ import {
   LoginScreen,
   FillProfile,
   CreateNewPin,
-  SetFingerprint
+  SetFingerprint,
+  FollowArtists
 } from '../pages/index';
 import {colors} from '../constants/colors/colors';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -115,6 +116,7 @@ const AppRouter = () => {
           <Stack.Screen name="FillProfile" component={FillProfile} />
           <Stack.Screen name="CreateNewPin" component={CreateNewPin} />
           <Stack.Screen name="SetFingerprint" component={SetFingerprint} />
+          <Stack.Screen name="FollowArtists" component={FollowArtists} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
