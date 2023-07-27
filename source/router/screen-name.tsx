@@ -10,5 +10,6 @@ export const ScreenName = {
     ProfileScreen: "ProfileScreen",
     FillProfile: "FillProfile",
     CreateNewPin: "CreateNewPin",
-    SetFingerprint: "SetFingerprint"
+    SetFingerprint: "SetFingerprint",
+    FollowArtists: "FollowArtists"
 }
