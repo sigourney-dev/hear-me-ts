@@ -1,18 +1,23 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {titles} from '../../constants/titles/titles';
 import {colors} from '../../constants/colors/colors';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {ButtonCustom} from '../../components/button';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenName } from '../../router/screen-name';
+import {useNavigation} from '@react-navigation/native';
+import {ScreenName} from '../../router/screen-name';
+import {Section} from '../../components/section';
+import {TextCustom} from '../../components/text-custom';
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../../utils/state';
 
 export const CreateNewPin = () => {
   const navigation = useNavigation();
+  const theme = useRecoilValue(themeState);
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <View style={styles.head}>
         <AppBarCustom
           iconLeft={faArrowLeft}
@@ -21,12 +26,20 @@ export const CreateNewPin = () => {
         />
       </View>
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{titles.add_pin_number}</Text>
+        <TextCustom style={styles.title}>{titles.add_pin_number}</TextCustom>
         <OTPInputView
           pinCount={4}
           style={styles.code}
           secureTextEntry={true}
-          codeInputFieldStyle={styles.codeBack}
+          codeInputFieldStyle={[
+            styles.codeBack,
+            {
+              backgroundColor: theme
+                ? colors.whiteBorder
+                : colors.backgroundBorder,
+              color: theme ? colors.black : colors.white,
+            },
+          ]}
           codeInputHighlightStyle={styles.codeFocus}
         />
       </View>
@@ -36,11 +49,11 @@ export const CreateNewPin = () => {
           backgroundColor={colors.main}
           titleColor={colors.white}
           onPress={() => {
-            navigation.navigate(ScreenName.SetFingerprint)
+            navigation.navigate(ScreenName.SetFingerprint);
           }}
         />
       </View>
-    </View>
+    </Section>
   );
 };
 
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flex: 0.15,
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   wrapper: {
     flex: 1,
@@ -73,13 +86,11 @@ const styles = StyleSheet.create({
   },
   codeBack: {
     borderColor: colors.border,
-    backgroundColor: colors.backgroundBorder,
     borderWidth: 1,
     borderRadius: 12,
     width: 68,
     height: 52,
     fontSize: 30,
-    color: colors.white,
   },
   codeFocus: {
     borderColor: colors.main,

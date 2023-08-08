@@ -3,45 +3,51 @@ import {View, ImageBackground, Text, StyleSheet} from 'react-native';
 import {images} from '../../constants/images/images';
 import {colors} from '../../constants/colors/colors';
 import {ButtonCustom} from '../../components/button';
+import {TextCustom} from '../../components/text-custom';
 import {titles} from '../../constants/titles/titles';
 import Swiper from 'react-native-swiper';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {Section} from '../../components/section';
 
 export const SplashScreen = () => {
-    const navigation = useNavigation();
-
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={images.splashScreen}
-        resizeMode="cover"
-        style={styles.images}></ImageBackground>
+    <Section>
+      <View style={styles.container}>
+        <ImageBackground
+          source={images.splashScreen}
+          resizeMode="cover"
+          style={styles.images}
+        />
 
-      <View style={styles.bottomTab}>
-        <View style={styles.textContainer}>
-          <Swiper
-            activeDotStyle={styles.dot}
-            activeDotColor={colors.main}
-            dotColor={colors.gray}>
-            <Text style={styles.text}>
-              <Text>{titles.introduction}</Text>
-              <Text style={styles.logo}> {titles.hear_me} </Text>
-              <Text>{titles.now}</Text>
-            </Text>
-            <Text style={styles.text}>{titles.have_nice}</Text>
-            <Text style={styles.text}>{titles.rate_me}</Text>
-          </Swiper>
-        </View>
-        <View>
-          <ButtonCustom
-            title={titles.get_started}
-            backgroundColor={colors.main}
-            titleColor={colors.white}
-            onPress={() => {navigation.navigate('TypesSignIn')}}
-          />
-        </View>
+        <Section style={styles.bottomTab}>
+          <View style={styles.textContainer}>
+            <Swiper
+              activeDotStyle={styles.dot}
+              activeDotColor={colors.main}
+              dotColor={colors.gray}>
+              <TextCustom style={styles.text}>
+                <TextCustom>{titles.introduction}</TextCustom>
+                <Text style={styles.logo}> {titles.hear_me} </Text>
+                <TextCustom style={undefined}>{titles.now}</TextCustom>
+              </TextCustom>
+              <TextCustom style={styles.text}>{titles.have_nice}</TextCustom>
+              <TextCustom style={styles.text}>{titles.rate_me}</TextCustom>
+            </Swiper>
+          </View>
+          <View>
+            <ButtonCustom
+              title={titles.get_started}
+              backgroundColor={colors.main}
+              titleColor={colors.white}
+              onPress={() => {
+                navigation.navigate('TypesSignIn');
+              }}
+            />
+          </View>
+        </Section>
       </View>
-    </View>
+    </Section>
   );
 };
 
@@ -57,7 +63,6 @@ const styles = StyleSheet.create({
     flex: 0.4,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    backgroundColor: colors.black,
     paddingHorizontal: 16,
   },
   textContainer: {
@@ -67,7 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop: 50,
     textAlign: 'center',
-    color: colors.white,
     fontWeight: '700',
   },
   dot: {

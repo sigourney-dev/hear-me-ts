@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {titles} from '../../constants/titles/titles';
@@ -7,11 +7,16 @@ import {ButtonCustom} from '../../components/button';
 import {useNavigation} from '@react-navigation/native';
 import {colors} from '../../constants/colors/colors';
 import {ScreenName} from '../../router/screen-name';
+import {Section} from '../../components/section';
+import {TextCustom} from '../../components/text-custom';
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../../utils/state';
 
 export const FollowArtists = () => {
   const navigation = useNavigation();
+  const theme = useRecoilValue(themeState);
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <View style={styles.head}>
         <AppBarCustom
           iconLeft={faArrowLeft}
@@ -21,15 +26,19 @@ export const FollowArtists = () => {
       </View>
       <View style={styles.wrapper}>
         <View>
-            <Text style={styles.title}>{titles.follow_description}</Text>
+          <TextCustom style={styles.title}>
+            {titles.follow_description}
+          </TextCustom>
         </View>
       </View>
       <View style={styles.bottom}>
         <View style={styles.button}>
           <ButtonCustom
             title={titles.skip}
-            backgroundColor={colors.backgroundBorder}
-            titleColor={colors.white}
+            backgroundColor={
+              theme ? colors.backWhiteBorder : colors.backgroundBorder
+            }
+            titleColor={theme ? colors.main : colors.white}
             onPress={() => {
               navigation.navigate(ScreenName.BottomBar);
             }}
@@ -46,7 +55,7 @@ export const FollowArtists = () => {
           />
         </View>
       </View>
-    </View>
+    </Section>
   );
 };
 
@@ -66,7 +75,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'left',
     flex: 0.5,
-    marginTop: 16
+    marginTop: 16,
   },
   bottom: {
     marginHorizontal: 16,

@@ -6,15 +6,18 @@
  */
 
 import React from 'react';
-import { MenuProvider } from 'react-native-popup-menu';
+import {MenuProvider} from 'react-native-popup-menu';
+import {RecoilRoot} from 'recoil';
 import AppRouter from './source/router/app-router';
 
 const App = (): JSX.Element => {
   return (
-   <MenuProvider>
-    <AppRouter/>
-   </MenuProvider>
+    <MenuProvider>
+      <RecoilRoot>
+        <AppRouter />
+      </RecoilRoot>
+    </MenuProvider>
   );
-}
+};
 
 export default App;

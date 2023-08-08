@@ -1,18 +1,10 @@
 import React, {SetStateAction, useCallback, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
 import {faArrowLeft, faSquarePen} from '@fortawesome/free-solid-svg-icons';
 import {titles} from '../../constants/titles/titles';
 import {TextInputCustom} from '../../components/text-input';
-import {
-  faCalendarDays,
-  faEnvelope,
-} from '@fortawesome/free-regular-svg-icons';
+import {faCalendarDays, faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import {ButtonCustom} from '../../components/button';
 import {colors} from '../../constants/colors/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -21,14 +13,18 @@ import {MediaType, launchImageLibrary} from 'react-native-image-picker';
 import {images} from '../../constants/images/images';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import KeyboardAvoidingWrapper from '../../components/keyboard-avoiding';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenName } from '../../router/screen-name';
+import {useNavigation} from '@react-navigation/native';
+import {ScreenName} from '../../router/screen-name';
+import {Section} from '../../components/section';
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../../utils/state';
 
 export const FillProfile = () => {
   const navigation = useNavigation();
   const [visibleCalendar, setVisibleCalendar] = useState(false);
   const [day, setDay] = useState(formatDate(new Date()));
   const [imgSelected, setImgSelected] = useState();
+  const theme = useRecoilValue(themeState);
 
   ///convert base64 to image
   const formatImage = (base64: any) => {
@@ -56,7 +52,7 @@ export const FillProfile = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <View style={styles.head}>
         <AppBarCustom
           iconLeft={faArrowLeft}
@@ -64,9 +60,9 @@ export const FillProfile = () => {
           title={titles.fill_profile}
         />
       </View>
-     <KeyboardAvoidingWrapper>
-     <View style={styles.wrapper}>
-            <View style={styles.avatar}>
+      <KeyboardAvoidingWrapper>
+        <View style={styles.wrapper}>
+          <View style={styles.avatar}>
             <Image
               source={imgSelected ? {uri: imgSelected} : images.avatar_default}
               resizeMode="cover"
@@ -113,17 +109,18 @@ export const FillProfile = () => {
             countryPicker={true}
             hiddenText={titles.phone_number}
             onPressRight={() => {}}
-            onChangeText={() => {
-            }}
+            onChangeText={() => {}}
           />
-      </View>
-     </KeyboardAvoidingWrapper>
+        </View>
+      </KeyboardAvoidingWrapper>
       <View style={styles.bottom}>
         <View style={styles.button}>
           <ButtonCustom
             title={titles.skip}
-            backgroundColor={colors.backgroundBorder}
-            titleColor={colors.white}
+            backgroundColor={
+              theme ? colors.backWhiteBorder : colors.backgroundBorder
+            }
+            titleColor={theme ? colors.main : colors.white}
             onPress={() => {}}
           />
         </View>
@@ -149,7 +146,7 @@ export const FillProfile = () => {
         }}
         onCancel={() => handleCalendar()}
       />
-    </View>
+    </Section>
   );
 };
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import {colors} from '../../constants/colors/colors';
 import {AppBarCustom} from '../../components/app-bar';
+import {TextCustom} from '../../components/text-custom';
+import {Section} from '../../components/section';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {
   faFacebook,
@@ -21,6 +23,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {ButtonCustom} from '../../components/button';
 import {useNavigation} from '@react-navigation/native';
 import {ScreenName} from '../../router/screen-name';
+import {useRecoilState} from 'recoil';
+import {themeState} from '../../utils/state';
 
 const screen = Dimensions.get('window');
 
@@ -42,7 +46,7 @@ const Options = (props: Props) => {
           size={24}
           color={color}
         />
-        <Text style={styles.textOptions}>{title}</Text>
+        <TextCustom style={styles.textOptions}>{title}</TextCustom>
       </View>
     </TouchableOpacity>
   );
@@ -50,9 +54,9 @@ const Options = (props: Props) => {
 
 export const TypesSignIn = () => {
   const navigation = useNavigation();
-
+  const [theme, setTheme] = useRecoilState(themeState);
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <AppBarCustom iconLeft={faArrowLeft} onPress={() => {}} />
       <View style={styles.wrapper}>
         <Image
@@ -60,7 +64,7 @@ export const TypesSignIn = () => {
           resizeMode="cover"
           style={styles.images}
         />
-        <Text style={styles.titleHeader}>{titles.lets_you_in}</Text>
+        <TextCustom style={styles.titleHeader}>{titles.lets_you_in}</TextCustom>
         <Options
           title={titles.continue_with_fb}
           icon={faFacebook}
@@ -78,8 +82,8 @@ export const TypesSignIn = () => {
         />
         <View style={styles.borderDivide}>
           <View style={styles.divide} />
-          <Text style={styles.textDivide}>{titles.or}</Text>
-          <View style={styles.divide}></View>
+          <TextCustom style={styles.textDivide}>{titles.or}</TextCustom>
+          <View style={styles.divide} />
         </View>
 
         <View style={styles.button}>
@@ -88,13 +92,14 @@ export const TypesSignIn = () => {
             backgroundColor={colors.main}
             titleColor={colors.white}
             onPress={() => {
-              navigation.navigate(ScreenName.LoginScreen);
+              // navigation.navigate(ScreenName.LoginScreen);
+              setTheme(!theme);
             }}
           />
         </View>
 
         <View style={styles.textBottom}>
-          <Text style={styles.textDescription}>{titles.not_have_account}</Text>
+          <TextCustom>{titles.not_have_account}</TextCustom>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(ScreenName.RegisterScreen);
@@ -103,7 +108,7 @@ export const TypesSignIn = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Section>
   );
 };
 
@@ -122,7 +127,6 @@ const styles = StyleSheet.create({
   },
   titleHeader: {
     fontSize: 44,
-    color: colors.white,
     fontWeight: '700',
     marginTop: 12,
   },
@@ -136,10 +140,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: screen.width / 4 - 12,
     borderRadius: 8,
-    backgroundColor: colors.backgroundBorder,
   },
   textOptions: {
-    color: colors.white,
     fontSize: 15,
     fontWeight: '600',
     marginTop: 3,
@@ -152,12 +154,11 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
   textDivide: {
-    color: colors.white,
     fontSize: 16,
     fontWeight: '600',
   },
   divide: {
-    borderBottomColor: colors.white,
+    borderBottomColor: colors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
     flex: 0.5,
     marginHorizontal: 16,
@@ -166,9 +167,6 @@ const styles = StyleSheet.create({
   textBottom: {
     flexDirection: 'row',
     marginTop: 24,
-  },
-  textDescription: {
-    color: colors.white,
   },
   textSign: {
     color: colors.main,

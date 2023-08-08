@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   Image,
   Alert,
   TouchableHighlight,
-  PanResponder
+  PanResponder,
 } from 'react-native';
 import {AppBarCustom} from '../../components/app-bar';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
@@ -15,13 +14,18 @@ import {colors} from '../../constants/colors/colors';
 import {ButtonCustom} from '../../components/button';
 import {images} from '../../constants/images/images';
 import TouchID from 'react-native-touch-id';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenName } from '../../router/screen-name';
+import {useNavigation} from '@react-navigation/native';
+import {ScreenName} from '../../router/screen-name';
+import {Section} from '../../components/section';
+import {TextCustom} from '../../components/text-custom';
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../../utils/state';
 
 export const SetFingerprint = () => {
-    const navigation = useNavigation();
-    const [locationX, setLocationX] = useState(0);
-    const [locationY, setLocationY] = useState(0);
+  const navigation = useNavigation();
+  const theme = useRecoilValue(themeState);
+  const [locationX, setLocationX] = useState(0);
+  const [locationY, setLocationY] = useState(0);
   const optionalConfigObject = {
     title: 'Authentication Required',
     color: colors.main,
@@ -38,8 +42,7 @@ export const SetFingerprint = () => {
     onStartShouldSetPanResponder: (event, gestureState) => true,
     onStartShouldSetPanResponderCapture: (event, gestureState) => true,
     onMoveShouldSetPanResponder: (event, gestureState) => false,
-    onMoveShouldSetPanResponderCapture:
-      (event, gestureState) => false,
+    onMoveShouldSetPanResponderCapture: (event, gestureState) => false,
     onPanResponderGrant: (event, gestureState) => false,
     onPanResponderMove: (event, gestureState) => false,
     onPanResponderRelease: (event, gestureState) => {
@@ -50,7 +53,7 @@ export const SetFingerprint = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <View style={styles.head}>
         <AppBarCustom
           title={titles.set_fingerprint}
@@ -59,7 +62,7 @@ export const SetFingerprint = () => {
         />
       </View>
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{titles.add_fingerprint}</Text>
+        <TextCustom style={styles.title}>{titles.add_fingerprint}</TextCustom>
         {/* <View {...handleGetPosition.panHandlers}> */}
         <TouchableHighlight
           onPress={() => {
@@ -68,16 +71,20 @@ export const SetFingerprint = () => {
           <Image source={images.fingerprint} />
         </TouchableHighlight>
         {/* </View> */}
-        <Text style={styles.title}>{titles.ask_add_fingerprint}</Text>
+        <TextCustom style={styles.title}>
+          {titles.ask_add_fingerprint}
+        </TextCustom>
       </View>
       <View style={styles.bottom}>
         <View style={styles.button}>
           <ButtonCustom
             title={titles.skip}
-            backgroundColor={colors.backgroundBorder}
-            titleColor={colors.white}
+            backgroundColor={
+              theme ? colors.backWhiteBorder : colors.backgroundBorder
+            }
+            titleColor={theme ? colors.main : colors.white}
             onPress={() => {
-                navigation.navigate(ScreenName.FollowArtists);
+              navigation.navigate(ScreenName.FollowArtists);
             }}
           />
         </View>
@@ -87,12 +94,12 @@ export const SetFingerprint = () => {
             backgroundColor={colors.main}
             titleColor={colors.white}
             onPress={() => {
-                navigation.navigate(ScreenName.FollowArtists);
+              navigation.navigate(ScreenName.FollowArtists);
             }}
           />
         </View>
       </View>
-    </View>
+    </Section>
   );
 };
 
