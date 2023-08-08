@@ -9,7 +9,9 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {colors} from '../constants/colors/colors';
 import CountryPicker from 'react-native-country-picker-modal';
-import { CountryCode, Country } from 'react-native-country-picker-modal';
+import {CountryCode, Country} from 'react-native-country-picker-modal';
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../utils/state';
 
 type Props = {
   iconLeft?: any;
@@ -35,7 +37,7 @@ export const TextInputCustom = (props: Props) => {
     secureTextEntry,
     countryPicker,
     value,
-    onChangeText
+    onChangeText,
   } = props;
   const [colorTextFocus, setColorTextFocus] = useState<string>(colors.grayIcon);
   const [colorBorder, setColorBorder] = useState<string>('');
@@ -44,13 +46,20 @@ export const TextInputCustom = (props: Props) => {
 
   const onSelect = (country: Country) => {
     setCountry(country.cca2);
-  }
+  };
+
+  const isLightMode = useRecoilValue(themeState);
 
   return (
     <View
       style={[
         styles.container,
         colorBorder ? {borderColor: colorBorder, borderWidth: 0.5} : null,
+        {
+          backgroundColor: isLightMode
+            ? colors.whiteBorder
+            : colors.backgroundBorder,
+        },
       ]}>
       <View style={styles.left}>
         {iconLeft ? (
@@ -65,19 +74,22 @@ export const TextInputCustom = (props: Props) => {
         ) : null}
         {countryPicker ? (
           <View style={styles.country}>
-            <CountryPicker 
-            withCallingCode={true}
-            withAlphaFilter={true}
-            withFilter={true}
-            countryCode={country}
-            onSelect={(country) => onSelect(country)}
-          />
+            <CountryPicker
+              withCallingCode={true}
+              withAlphaFilter={true}
+              withFilter={true}
+              countryCode={country}
+              onSelect={country => onSelect(country)}
+            />
           </View>
         ) : null}
         <TextInput
           placeholder={hiddenText}
           defaultValue={value ? value : ''}
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {color: isLightMode ? colors.black : colors.white},
+          ]}
           numberOfLines={numberOfLine}
           placeholderTextColor={colors.grayIcon}
           selectionColor={colors.white}
@@ -95,7 +107,7 @@ export const TextInputCustom = (props: Props) => {
               setColorIcon(colors.white);
             } else {
               setColorIcon(colors.grayIcon);
-            };
+            }
             onChangeText();
           }}
         />
@@ -110,7 +122,7 @@ export const TextInputCustom = (props: Props) => {
             size={16}
             style={styles.iconRight}
             color={
-              colorTextFocus == colors.grayIcon ? colorIcon : colorTextFocus
+              colorTextFocus === colors.grayIcon ? colorIcon : colorTextFocus
             }
           />
         ) : null}
@@ -124,7 +136,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 32,
-    backgroundColor: colors.backgroundBorder,
     width: screen.width - 32,
     height: 52,
     borderRadius: 12,
@@ -140,10 +151,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: screen.width - 120,
-    color: colors.white,
     fontWeight: '600',
   },
   country: {
-    marginTop: -8
-  }
+    marginTop: -8,
+  },
 });

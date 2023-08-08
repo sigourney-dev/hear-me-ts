@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import {ButtonCustom} from '../../components/button';
 import {AppBarCustom} from '../../components/app-bar';
 import {
@@ -30,6 +23,8 @@ import {TextInputCustom} from '../../components/text-input';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {Section} from '../../components/section';
+import {TextCustom} from '../../components/text-custom';
 
 const screen = Dimensions.get('window');
 
@@ -59,7 +54,7 @@ export const RegisterScreen = () => {
   const [isSelected, setIsSelected] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <Section style={styles.container}>
       <AppBarCustom iconLeft={faArrowLeft} onPress={() => {}} />
       <View style={styles.wrapper}>
         <Image
@@ -67,20 +62,26 @@ export const RegisterScreen = () => {
           resizeMode={'cover'}
           style={styles.image}
         />
-        <Text style={styles.titleHeader}>{titles.create_account}</Text>
+        <TextCustom style={styles.titleHeader}>
+          {titles.create_account}
+        </TextCustom>
         <View>
           <TextInputCustom
             hiddenText={titles.email}
             iconLeft={faEnvelope}
-            onPressRight={() => { } } onChangeText={() => {}}          />
+            onPressRight={() => {}}
+            onChangeText={() => {}}
+          />
           <TextInputCustom
             hiddenText={titles.password}
             iconLeft={faLock}
             iconRight={hiddenPass ? faEyeSlash : faEye}
             onPressRight={() => {
               setHiddenPass(!hiddenPass);
-            } }
-            secureTextEntry={hiddenPass} onChangeText={() => {}}          />
+            }}
+            secureTextEntry={hiddenPass}
+            onChangeText={() => {}}
+          />
         </View>
         <TouchableOpacity
           style={styles.remember}
@@ -93,7 +94,7 @@ export const RegisterScreen = () => {
             size={24}
             style={styles.iconRemember}
           />
-          <Text style={styles.textRemember}>{titles.remember_me}</Text>
+          <TextCustom>{titles.remember_me}</TextCustom>
         </TouchableOpacity>
 
         <View style={styles.button}>
@@ -102,13 +103,15 @@ export const RegisterScreen = () => {
             backgroundColor={colors.main}
             titleColor={colors.white}
             onPress={() => {
-              navigation.navigate('FillProfile')
+              navigation.navigate('FillProfile');
             }}
           />
         </View>
         <View style={styles.borderDivide}>
           <View style={styles.divide} />
-          <Text style={styles.textDivide}>{titles.or_continue_with}</Text>
+          <TextCustom style={styles.textDivide}>
+            {titles.or_continue_with}
+          </TextCustom>
           <View style={styles.divide}></View>
         </View>
 
@@ -119,13 +122,16 @@ export const RegisterScreen = () => {
         </View>
 
         <View style={styles.textBottom}>
-          <Text style={styles.textDescription}>{titles.have_account}</Text>
-          <TouchableOpacity onPress={() => {navigation.navigate('LoginScreen')}}>
+          <TextCustom>{titles.have_account}</TextCustom>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('LoginScreen');
+            }}>
             <Text style={styles.textSign}> {titles.sign_in}</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Section>
   );
 };
 
@@ -144,7 +150,6 @@ const styles = StyleSheet.create({
   },
   titleHeader: {
     fontSize: 32,
-    color: colors.white,
     fontWeight: '600',
     marginTop: 44,
   },
@@ -152,37 +157,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 24,
   },
-  textRemember: {
-    color: colors.white,
-  },
   iconRemember: {
     marginTop: -3,
     marginRight: 12,
   },
   button: {
     marginTop: 24,
-    width: screen.width - 32
+    width: screen.width - 32,
   },
   borderDivide: {
     flexDirection: 'row',
     marginVertical: 32,
   },
   divide: {
-    borderBottomColor: colors.white,
     borderBottomWidth: StyleSheet.hairlineWidth,
     flex: 0.5,
     marginHorizontal: 16,
     marginBottom: 10,
   },
   textDivide: {
-    color: colors.white,
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   logoBox: {
     borderWidth: 0.4,
     borderColor: colors.border,
-    backgroundColor: colors.backgroundBorder,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,
@@ -195,9 +194,6 @@ const styles = StyleSheet.create({
   textBottom: {
     flexDirection: 'row',
     marginTop: 24,
-  },
-  textDescription: {
-    color: colors.white,
   },
   textSign: {
     color: colors.main,
